@@ -9,6 +9,7 @@ public class Allergen {
 	//private List<String> allergens;
 	private String name;
 	private int code;
+	
 	public Allergen(int code, String name){
 		//allergens = new ArrayList<String>();
 		this.name = name;
