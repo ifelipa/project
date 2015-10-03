@@ -21,4 +21,5 @@ public class Procedure {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 }
