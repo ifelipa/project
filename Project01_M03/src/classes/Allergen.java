@@ -24,9 +24,6 @@ public class Allergen {
 		return(allergens.contains(element))? allergens.indexOf(element): -1;
 	}
 	
-	/*
-	 * Metodo que retorna el nombre 
-	 */
 	public String returnName(int element){
 		return(allergens.contains(element))? allergens.get(element): "-1";
 	}

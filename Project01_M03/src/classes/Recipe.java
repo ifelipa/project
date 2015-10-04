@@ -13,26 +13,52 @@ public class Recipe {
 	double proteines;
 	int fat;
 	int salt;
-	ArrayList<AllergenAux> allergens;
+	ArrayList<Allergen> allergens;
 	
+	/*
+	 * Method which returns the recipe code 
+	 */
 	public int getCode() {
 		return code;
 	}
+	
+	/*
+	 * Method to set the code of our recipe
+	 * 
+	 */
 	public void setCode(int code) {
 		this.code = code;
 	}
+	
+	/*
+	 * Method which returns the recipe name
+	 */
+	
 	public String getName() {
 		return name;
 	}
+	
+	/*
+	 *	Method which sets the recipe name 
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/*
+	 * Method which returns the recipe quantity
+	 */
 	public int getQuantity() {
 		return quantity;
 	}
+	
+	/*
+	 * Method to set the quantity of our recipe
+	 */
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
 	public ArrayList<Ingredient> getIngredients() {
 		return ingredients;
 	}
@@ -69,10 +95,18 @@ public class Recipe {
 	public void setSalt(int salt) {
 		this.salt = salt;
 	}
-	public ArrayList<AllergenAux> getAllergens() {
+	public ArrayList<Allergen> getAllergens() {
 		return allergens;
 	}
-	public void setAllergens(ArrayList<AllergenAux> allergens) {
+	public void setAllergens(ArrayList<Allergen> allergens) {
 		this.allergens = allergens;
+	}
+	
+	/*
+	 * Print recipe
+	 */
+	@Override
+	public String toString(){
+		return this.code + this.name + this.quantity + this.ingredients + this.kcal + this.carbohidrates + this.proteines + this.fat + this.salt + this.allergens;
 	}
 }
