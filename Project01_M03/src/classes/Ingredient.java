@@ -11,10 +11,26 @@ public class Ingredient {
 	double proteines;
 	double fat;
 	double salt;
-	List<AllergenAux> allergens;
+	List<Allergen> allergens;
+
+
+	public Ingredient(int code, String name, String measuring, double kcal, double carbohidrates, double proteines,
+			double fat, double salt, List<Allergen> allergens) {
+		super();
+		this.code = code;
+		this.name = name;
+		this.measuring = measuring;
+		this.kcal = kcal;
+		Carbohidrates = carbohidrates;
+		this.proteines = proteines;
+		this.fat = fat;
+		this.salt = salt;
+		this.allergens = allergens;
+	}
+	public Ingredient() {}
+
 
 	// Setter's and Getter's
-
 	public int getCode() {
 		return code;
 	}
@@ -79,16 +95,19 @@ public class Ingredient {
 		this.salt = salt;
 	}
 
-	public List<AllergenAux> getAllergens() {
+	public List<Allergen> getAllergens() {
 		return allergens;
 	}
 
-	public void setAllergens(List<AllergenAux> allergens) {
+	public void setAllergens(List<Allergen> allergens) {
 		this.allergens = allergens;
 	}
 	
 	/*
-	 * Method which retrieves full ingredient according to the code
+	 * searchByCode
+	 * @param a is a List of Ingredient.
+	 * @param code is Integer, It's the code to search. 
+	 * @return String, It's full ingredient according to the code. 
 	 */
 	public String searchByCode(List<Ingredient>a,int code){
 		for (int i = 0; i< a.size(); i++){
@@ -117,7 +136,7 @@ public class Ingredient {
 	
 	
 	// Method which returns if an ingredient contains one Allergen to verify it //
-	public boolean containAllergen(AllergenAux a) {
+	public boolean containAllergen(Allergen a) {
 		if (this.allergens.contains(a)) {
 			return true;
 		}
