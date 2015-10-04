@@ -11,7 +11,7 @@ public class Ingredient {
 	double proteines;
 	double fat;
 	double salt;
-	List<Allergen> allergens;
+	List<AllergenAux> allergens;
 
 	// Setter's and Getter's
 
@@ -79,16 +79,16 @@ public class Ingredient {
 		this.salt = salt;
 	}
 
-	public List<Allergen> getAllergens() {
+	public List<AllergenAux> getAllergens() {
 		return allergens;
 	}
 
-	public void setAllergens(List<Allergen> allergens) {
+	public void setAllergens(List<AllergenAux> allergens) {
 		this.allergens = allergens;
 	}
 	
 	// Method which returns if an ingredient contains one Allergen to verify it //
-	public boolean containAllergen(Allergen a) {
+	public boolean containAllergen(AllergenAux a) {
 		if (this.allergens.contains(a)) {
 			return true;
 		}

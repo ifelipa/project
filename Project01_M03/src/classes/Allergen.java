@@ -1,40 +1,34 @@
 package classes;
 
-// import java.util.ArrayList;
-// import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Allergen {
 	// the code is the index of the arrayList //
+	List<String> allergens;
+	String [] alergico = { "Gluten", "shellfish", "eggs","fish", "peanuts", "soy", "dairy",
+			"nuts", "celery", "mustard","sesame", "sulphites", "mollusk", "lupin"};
+
 	
-	//private List<String> allergens;
-	private String name;
-	private int code;
-	
-	public Allergen(int code, String name){
-		//allergens = new ArrayList<String>();
-		this.name = name;
-		this.code = code;
-	}
-
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public Allergen(){
+		allergens = new ArrayList<String>();
+		for (String string : alergico) {
+			allergens.add(string);
+		}	
 	}
 	
-	@Override
-	public String toString() {
-		return this.name;
+	/*
+	 * Metodo que retorna el codigo  
+	 */
+	public int returnCode(String element){
+		return(allergens.contains(element))? allergens.indexOf(element): -1;
+	}
+	
+	/*
+	 * Metodo que retorna el nombre 
+	 */
+	public String returnName(int element){
+		return(allergens.contains(element))? allergens.get(element): "-1";
 	}
 
 }

@@ -13,7 +13,7 @@ public class Recipe {
 	double proteines;
 	int fat;
 	int salt;
-	ArrayList<Allergen> allergens;
+	ArrayList<AllergenAux> allergens;
 	
 	public int getCode() {
 		return code;
@@ -69,10 +69,10 @@ public class Recipe {
 	public void setSalt(int salt) {
 		this.salt = salt;
 	}
-	public ArrayList<Allergen> getAllergens() {
+	public ArrayList<AllergenAux> getAllergens() {
 		return allergens;
 	}
-	public void setAllergens(ArrayList<Allergen> allergens) {
+	public void setAllergens(ArrayList<AllergenAux> allergens) {
 		this.allergens = allergens;
 	}
 }
