@@ -87,6 +87,35 @@ public class Ingredient {
 		this.allergens = allergens;
 	}
 	
+	/*
+	 * Method which retrieves full ingredient according to the code
+	 */
+	public String searchByCode(List<Ingredient>a,int code){
+		for (int i = 0; i< a.size(); i++){
+			if (a.get(i).getCode() == code){
+				Ingredient b = a.get(i);
+				return "Ingredient: " + b.getCode() + " " + b.getName() + " " + b.getMeasuring() + " " + b.getKcal() + " " + b.getCarbohidrates() + " " + b.getProteines() + " " + b.getFat() + " " + b.getSalt() + " " + b.getAllergens();
+			}
+		}
+		return ("The code doesn't appear in the list");
+		
+	}
+	
+	/*
+	 * Method which retrieves full ingredient according to the name
+	 */
+	public String searchByName(List<Ingredient> a,String name){
+		for (int i = 0; i< a.size(); i++){
+			if (a.get(i).getName() == name){
+				Ingredient b = a.get(i);
+				return "Ingredient: " + b.getCode() + " " + b.getName() + " " + b.getMeasuring() + " " + b.getKcal() + " " + b.getCarbohidrates() + " " + b.getProteines() + " " + b.getFat() + " " + b.getSalt() + " " + b.getAllergens();
+			}
+		}
+		return ("The name doesn't appear in the list");
+		
+	}
+	
+	
 	// Method which returns if an ingredient contains one Allergen to verify it //
 	public boolean containAllergen(AllergenAux a) {
 		if (this.allergens.contains(a)) {
