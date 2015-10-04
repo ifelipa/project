@@ -12,8 +12,9 @@ public class Main {
 		// TODO Auto-generated method stub
 		// we create one arraylist of allergens //
 		Allergen listaAler = new Allergen();
-		System.out.println(listaAler);
 		System.out.println(listaAler.returnCode("eggs"));
+		System.out.println(listaAler.returnName(2));
+		System.out.println(listaAler.returnName(-2));
 	}
 
 }

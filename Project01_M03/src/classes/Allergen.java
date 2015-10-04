@@ -25,7 +25,7 @@ public class Allergen {
 	}
 	
 	public String returnName(int element){
-		return(allergens.contains(element))? allergens.get(element): "-1";
+		return(element > 0 && element <allergens.size())?allergens.get(element):"Error..! That code don't appear in our allergens";
 	}
 
 }
