@@ -11,11 +11,9 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		// we create one arraylist of allergens //
-		List<Allergen> allergens = new ArrayList<Allergen>();
-
-		// we check if the arraylist is empty o full //
-		System.out.println(allergens.size());
-		
+		Allergen listaAler = new Allergen();
+		System.out.println(listaAler);
+		System.out.println(listaAler.returnCode("eggs"));
 	}
 
 }
