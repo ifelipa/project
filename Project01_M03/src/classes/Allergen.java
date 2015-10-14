@@ -1,46 +1,33 @@
 package classes;
 
-import java.util.ArrayList;
+import java.util.TreeMap;
+
 import java.util.List;
+import java.util.Map;
 
 public class Allergen {
 
-	private String name;
+	public TreeMap<Integer,String> ingredients= new TreeMap<Integer,String>();
 	private int code;
+	private String name;
 	
-	public Allergen(int code, String name){
-		this.name = name;
-		this.code = code;
-	}
-	
-	/*
-	 * returnCode
-	 * 
-	 * @param element is String, It´s the name of allergen.
-	 * 
-	 * @return is integer, It´s code of the name.
-	 * 
-	 */
-	public int returnCode(List allergens, String element) {
-		return (allergens.contains(element)) ? allergens.indexOf(element) : -1;
+	public Allergen(){
+		// aÃ±ade todos los elementos al mapa //
+		AddElements(ingredients);
 	}
 
 	/*
-	 * returnName
-	 * 
-	 * @param element is Integer, It´s the code of allergen.
-	 * 
-	 * @return is String, It´s name of the code.
-	 * 
+	 * Getters y setters 
 	 */
-	public String returnName(List <Allergen> allergens, int element) {
-		return (element > 0 && element < allergens.size()) ? (allergens.get(element).getName())
-				: "Error..! That code don't appear in our allergens";
+	
+	public TreeMap<Integer, String> getIngredients() {
+		return ingredients;
 	}
-	
-	
 
-	//Setter's and Getter's
+	public void setIngredients(TreeMap<Integer, String> ingredients) {
+		this.ingredients = ingredients;
+	}
+
 	public int getCode() {
 		return code;
 	}
@@ -56,11 +43,32 @@ public class Allergen {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	
-	
-	@Override
-	public String toString() {
-		return this.name;
+	/*
+	 * Metodo que aÃ±ade elementos al mapa ya en el constructor 
+	 */
+	public void AddElements(TreeMap<Integer,String> a){
+		a.put(1,"Gluten");
+		a.put(2, "Shellfish");
+		a.put(3, "Eggs");
+		a.put(4, "Fish");
+		a.put(5, "Peanuts");
+		a.put(6,"Soy");
+		a.put(7, "Nuts");
+		a.put(8, "Celery");
+		a.put(9,"Mustard");
+		a.put(10, "Sesame");
+		a.put(11,"Sulphites");
+		a.put(12, "Mollusk");
+		a.put(13, "Lupin");
+	}
+
+	/*
+	 * Metodo que retorna el tamaÃ±o del mapa alergÃ©nicos
+	 */
+	public int tamany() {
+		return this.getIngredients().size();
 	}
 
 }
