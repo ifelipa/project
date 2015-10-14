@@ -20,6 +20,10 @@ public class Main {
 		//Prueba
 		Allergen a = new Allergen();
 		System.out.println(a.tamany());
+		a.AddElement(14, "Patatas");
+		System.out.println(a.tamany());
+		System.out.println(a.getElement(13));
+		System.out.println(a.getElement("Lupin"));
 //		Ingredient arroz = new Ingredient(01,"Arroz","kg",10,15,1,3,2,alergicoProducto);
 //		System.out.println(arroz.containAllergen(eggs));	
 //		Procedure pr=new Procedure(1, "Hervir");
@@ -27,5 +31,4 @@ public class Main {
 		
 		
 	}
-
 }

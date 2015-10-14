@@ -1,8 +1,6 @@
 package classes;
 
 import java.util.TreeMap;
-
-import java.util.List;
 import java.util.Map;
 
 public class Allergen {
@@ -46,7 +44,7 @@ public class Allergen {
 
 	
 	/*
-	 * Metodo que añade elementos al mapa ya en el constructor 
+	 * Metodo que añade elementos iniciales al mapa ya en el constructor 
 	 */
 	public void AddElements(TreeMap<Integer,String> a){
 		a.put(1,"Gluten");
@@ -69,6 +67,47 @@ public class Allergen {
 	 */
 	public int tamany() {
 		return this.getIngredients().size();
+	}
+
+	/*
+	 * Añadir un elemento a parte en el mapa 
+	 */
+	public void AddElement(int code, String name){
+		this.getIngredients().put(code, name);
+	}
+
+	/*
+	 * Sacar un elemento por el codigo 
+	 */
+	public Object getElement(int code){
+		for (Map.Entry<Integer, String> entry : ingredients.entrySet()) {
+			if (entry.getKey() == code) {
+				return entry;
+			}
+		}
+		return null;
+	}
+
+	/*
+	 * Sacar un elemento por el nombre 
+	 */
+	public Object getElement(String name){
+		for (Map.Entry<Integer, String> entry : ingredients.entrySet()) {
+			if (entry.getValue() == name) {
+				return entry;
+			}
+		}
+		return null;
+	}
+	
+	/*
+	 * Imprime un mapa
+	 */
+	private static void imprimirMap(Map<Integer, String> a) {
+		// TODO Auto-generated method stub
+		for (Map.Entry<Integer,String> entry : a.entrySet()) {
+			System.out.println(entry.getKey() + " => " + entry.getValue());
+		}
 	}
 
 }
