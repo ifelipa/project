@@ -8,15 +8,16 @@ public class Recipe {
 	String name;
 	int quantity;
 	ArrayList<Ingredient> ingredients;
+	
 	double kcal;
 	double carbohidrates;
 	double proteines;
 	int fat;
 	int salt;
-	Allergen a;
+	AllergenDictionary a;
 	
 	
-	public Recipe(int code,String name, int quantity,ArrayList<Ingredient> ingredients,double kcal, double carbohidrates, double proteines, int fat, int salt, Allergen a ){
+	public Recipe(int code,String name, int quantity,ArrayList<Ingredient> ingredients,double kcal, double carbohidrates, double proteines, int fat, int salt, AllergenDictionary a ){
 		this.code = code;
 		this.name = name;
 		this.quantity = quantity;
@@ -120,13 +121,18 @@ public class Recipe {
 	}
 
 
-	public Allergen getAllergen() {
+	public AllergenDictionary getAllergen() {
 		return a;
 	}
 
 
-	public void setAllergen(Allergen a) {
+	public void setAllergen(AllergenDictionary a) {
 		this.a = a;
+	}
+
+
+	public Recipe() {
+		super();
 	}
 	
 }
