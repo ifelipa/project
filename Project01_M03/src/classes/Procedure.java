@@ -27,9 +27,9 @@ public class Procedure {
 
 	/*
 	 * ProceedIngredient
-	 * @param codeProcedure is integer, It´s the code of procedure.
-	 * @param codeIngredient is integer, It´s the code of Ingredient.
-	 * @param quantity is integer, It´s  int times, int time, int temperature
+	 * @param codeProcedure is integer, It's the code of procedure.
+	 * @param codeIngredient is integer, It's the code of Ingredient.
+	 * @param quantity is integer, It's  int times, int time, int temperature
 	 * 
 	 */
 	public String ProceedIngredient(int codeProcedure, Ingredient codeIngredient, int quantity, int times, int time, int temperature) {

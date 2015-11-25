@@ -14,8 +14,7 @@ public class Ingredient {
 	List<Allergen> allergens;
 
 
-	public Ingredient(int code, String name, String measuring, double kcal, double carbohidrates, double proteines,
-			double fat, double salt, List<Allergen> allergens) {
+	public Ingredient(int code, String name, String measuring, double kcal, double carbohidrates, double proteines, double fat, double salt, List<Allergen> allergens) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -27,9 +26,48 @@ public class Ingredient {
 		this.salt = salt;
 		this.allergens = allergens;
 	}
-	public Ingredient() {}
-
-
+	/*
+	 * searchByCode
+	 * @param a is a List of Ingredient.
+	 * @param code is Integer, It's the code to search. 
+	 * @return String, It's full ingredient according to the code. 
+	 */
+	public Ingredient searchByCode(List<Ingredient> a,int code){
+		for (int i = 0; i< a.size(); i++){
+			if (a.get(i).getCode() == code){
+				return a.get(i);
+			}
+		}
+		return null;	
+	}
+	
+	@Override
+	public String toString() {
+		return "Ingredient [code=" + code + ", name=" + name + ", measuring=" + measuring + ", kcal=" + kcal
+				+ ", Carbohidrates=" + Carbohidrates + ", proteines=" + proteines + ", fat=" + fat + ", salt=" + salt
+				+ ", allergens=" + allergens + "]";
+	}
+	/*
+	 * Method which retrieves full ingredient according to the name
+	 */
+	public Ingredient searchByName(List<Ingredient> a,String name){
+		for (int i = 0; i< a.size(); i++){
+			if (a.get(i).getName() == name){
+				return a.get(i);
+			}
+		}
+		return null;
+	}
+	
+	// Method which returns if an ingredient contains one Allergen to verify it //
+	public boolean containAllergen(Allergen b) {
+		if (this.allergens.contains(b)) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	// Setter's and Getter's
 	public int getCode() {
 		return code;
@@ -103,44 +141,5 @@ public class Ingredient {
 		this.allergens = allergens;
 	}
 	
-	/*
-	 * searchByCode
-	 * @param a is a List of Ingredient.
-	 * @param code is Integer, It's the code to search. 
-	 * @return String, It's full ingredient according to the code. 
-	 */
-	public String searchByCode(List<Ingredient>a,int code){
-		for (int i = 0; i< a.size(); i++){
-			if (a.get(i).getCode() == code){
-				Ingredient b = a.get(i);
-				return "Ingredient: " + b.getCode() + " " + b.getName() + " " + b.getMeasuring() + " " + b.getKcal() + " " + b.getCarbohidrates() + " " + b.getProteines() + " " + b.getFat() + " " + b.getSalt() + " " + b.getAllergens();
-			}
-		}
-		return ("The code doesn't appear in the list");
-		
-	}
-	
-	/*
-	 * Method which retrieves full ingredient according to the name
-	 */
-	public String searchByName(List<Ingredient> a,String name){
-		for (int i = 0; i< a.size(); i++){
-			if (a.get(i).getName() == name){
-				Ingredient b = a.get(i);
-				return "Ingredient: " + b.getCode() + " " + b.getName() + " " + b.getMeasuring() + " " + b.getKcal() + " " + b.getCarbohidrates() + " " + b.getProteines() + " " + b.getFat() + " " + b.getSalt() + " " + b.getAllergens();
-			}
-		}
-		return ("The name doesn't appear in the list");
-		
-	}
-	
-	
-	// Method which returns if an ingredient contains one Allergen to verify it //
-	public boolean containAllergen(Allergen a) {
-		if (this.allergens.contains(a)) {
-			return true;
-		}
-		return false;
-	}
 
 }
