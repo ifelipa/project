@@ -25,6 +25,6 @@ public class Main {
 //		Procedure pr=new Procedure(1, "Hervir");
 //		System.out.println(pr.ProceedIngredient(01, arroz, 10, 1, 45, 45));
 		zyszo
-		
+		dfddf
 	}
 }
