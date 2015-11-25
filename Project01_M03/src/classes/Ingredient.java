@@ -60,7 +60,7 @@ public class Ingredient {
 	}
 	
 	// Method which returns if an ingredient contains one Allergen to verify it //
-	public boolean containAllergen(Allergen b) {
+	public boolean containAllergen(AllergenDictionary b) {
 		if (this.allergens.contains(b)) {
 			return true;
 		}
