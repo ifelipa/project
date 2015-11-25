@@ -5,82 +5,64 @@ import java.util.Map;
 
 public class Allergen {
 
-	public TreeMap<Integer,String> ingredients= new TreeMap<Integer,String>();
-	private int code;
-	private String name;
+	public TreeMap<Integer,String> listAllergen= new TreeMap<Integer,String>();
+
 	
 	public Allergen(){
 		// añade todos los elementos al mapa //
-		AddElements(ingredients);
+
+		listAllergen.put(1,"Gluten");
+		listAllergen.put(2, "Shellfish");
+		listAllergen.put(3, "Eggs");
+		listAllergen.put(4, "Fish");
+		listAllergen.put(5, "Peanuts");
+		listAllergen.put(6,"Soy");
+		listAllergen.put(7, "Nuts");
+		listAllergen.put(8, "Celery");
+		listAllergen.put(9,"Mustard");
+		listAllergen.put(10, "Sesame");
+		listAllergen.put(11,"Sulphites");
+		listAllergen.put(12, "Mollusk");
+		listAllergen.put(13, "Lupin");
+
 	}
+	
 
 	/*
 	 * Getters y setters 
 	 */
-	
-	public TreeMap<Integer, String> getIngredients() {
-		return ingredients;
+
+
+	public TreeMap<Integer, String> getListAllergen() {
+		return listAllergen;
 	}
 
-	public void setIngredients(TreeMap<Integer, String> ingredients) {
-		this.ingredients = ingredients;
-	}
 
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setListAllergen(TreeMap<Integer, String> listAllergen) {
+		this.listAllergen = listAllergen;
 	}
 
 	
-	/*
-	 * Metodo que añade elementos iniciales al mapa ya en el constructor 
-	 */
-	public void AddElements(TreeMap<Integer,String> a){
-		a.put(1,"Gluten");
-		a.put(2, "Shellfish");
-		a.put(3, "Eggs");
-		a.put(4, "Fish");
-		a.put(5, "Peanuts");
-		a.put(6,"Soy");
-		a.put(7, "Nuts");
-		a.put(8, "Celery");
-		a.put(9,"Mustard");
-		a.put(10, "Sesame");
-		a.put(11,"Sulphites");
-		a.put(12, "Mollusk");
-		a.put(13, "Lupin");
-	}
-
 	/*
 	 * Metodo que retorna el tamaño del mapa alergénicos
 	 */
 	public int tamany() {
-		return this.getIngredients().size();
+		return this.getListAllergen().size();
 	}
+
 
 	/*
 	 * Añadir un elemento a parte en el mapa 
 	 */
 	public void AddElement(int code, String name){
-		this.getIngredients().put(code, name);
+		this.listAllergen.put(code, name);
 	}
 
 	/*
 	 * Sacar un elemento por el codigo 
 	 */
 	public Object getElement(int code){
-		for (Map.Entry<Integer, String> entry : ingredients.entrySet()) {
+		for (Map.Entry<Integer, String> entry : listAllergen.entrySet()) {
 			if (entry.getKey() == code) {
 				return entry;
 			}
@@ -92,8 +74,8 @@ public class Allergen {
 	 * Sacar un elemento por el nombre 
 	 */
 	public Object getElement(String name){
-		for (Map.Entry<Integer, String> entry : ingredients.entrySet()) {
-			if (entry.getValue() == name) {
+		for (Map.Entry<Integer, String> entry : listAllergen.entrySet()) {
+			if (entry.getValue().equals(name)) {
 				return entry;
 			}
 		}
@@ -102,6 +84,7 @@ public class Allergen {
 	
 	/*
 	 * Imprime un mapa
+	 * 
 	 */
 	private static void imprimirMap(Map<Integer, String> a) {
 		// TODO Auto-generated method stub
