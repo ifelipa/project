@@ -20,7 +20,7 @@ public class Ingredient {
 		this.name = name;
 		this.measuring = measuring;
 		this.kcal = kcal;
-		Carbohidrates = carbohidrates;
+		this.Carbohidrates = carbohidrates;
 		this.proteines = proteines;
 		this.fat = fat;
 		this.salt = salt;
