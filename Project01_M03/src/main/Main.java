@@ -72,10 +72,7 @@ public class Main {
 	}
 	
 	static Recipe createRecipe(int code, String name, int quantity, ArrayList <RecipeIngredients> listOfIngredients) {
-		Recipe r = new Recipe(); 
-		
-		
-		
+		Recipe r = new Recipe();
 		return r; 
 	}
 	
