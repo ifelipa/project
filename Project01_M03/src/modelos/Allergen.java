@@ -1,4 +1,4 @@
-package classes;
+package modelos;
 
 public class Allergen {
 	int codeAl;

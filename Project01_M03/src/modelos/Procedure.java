@@ -1,4 +1,4 @@
-package classes;
+package modelos;
 
 public class Procedure {
 	int code;

@@ -3,8 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-// we import all classes added in the package classes //
-import classes.*;
+import modelos.*;
 
 public class Main {
 
