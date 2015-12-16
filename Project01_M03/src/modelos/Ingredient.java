@@ -26,6 +26,11 @@ public class Ingredient {
 		this.salt = salt;
 		this.allergens = allergens;
 	}
+	
+	public Ingredient() {
+		super();
+	}
+
 	/*
 	 * searchByCode
 	 * @param a is a List of Ingredient.
