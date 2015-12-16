@@ -58,8 +58,8 @@ public class Main {
 		
 		Procedure cutslice = new Procedure(1, "cut in slice");
 		Procedure cutcubes = new Procedure(1, "cut in cubes");
-		Procedure attachd = new Procedure(1, "add");
-		Procedure keepcold = new Procedure(1, "keep cold");
+		Procedure 	attachd = new Procedure(1, "add");
+		Procedure keepcold = new Procedure(1, "cutslice");
 		
 		// constructor que coja y cree con sólo los ingredientes (+nombre de receta, + código de receta) la receta y rellene el resto
 		
