@@ -56,10 +56,10 @@ public class Main {
 		llistaIngredients.add(new RecipeIngredients (5, 200));
 		llistaIngredients.add(new RecipeIngredients (6, 10));
 		
-		Procedure cutslice = new Procedure(1, "cut in slice");
-		Procedure cutcubes = new Procedure(1, "cut in cubes");
-		Procedure 	attachd = new Procedure(1, "add");
-		Procedure keepcold = new Procedure(1, "cutslice");
+		Procedure cutslice = new Procedure(1, "cut in slice",0);
+		Procedure cutcubes = new Procedure(1, "cut in cubes",0);
+		Procedure attachd = new Procedure(1, "add",0);
+		Procedure keepcold = new Procedure(1, "keep cold",10);
 		
 		// constructor que coja y cree con sólo los ingredientes (+nombre de receta, + código de receta) la receta y rellene el resto
 		
