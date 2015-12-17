@@ -121,17 +121,25 @@ public class Main {
 			double fat = r.getDouble("fat");
 			double salt = r.getDouble("salt");
 			String allergensList = r.getString("allergensList");
-			System.out.println("Receta nº:" + code);
+			System.out.println("Receta nº: " + code);
 			System.out.println("Nombre: "+ name);
 			System.out.println("Para "+quantity+" personas.");
 			System.out.println("Los ingredientes son: ");
-			String sql_ingredientes = "select name from ingredient where code in ("
+//			String sql_ingredientes = "select name, quantity, measuringCode from ingredient where code in ("
+//					+ "	select code_ingredient from ingredientxrecipe where code_recipe ="+code +")";
+			
+			String sql_ingredientes = "select name, quantity,(select Name from measuringmethod where code= measuringCode) from ingredient where code in ("
 					+ "	select code_ingredient from ingredientxrecipe where code_recipe ="+code +")";
+			
 			stat = Conectar.getInstance().createConnection().createStatement();
 			resul = stat.executeQuery(sql_ingredientes);
+			
 			while (resul.next()){
+				int quan = resul.getInt("quantity");
 				String name_ingre= resul.getString("name");
-				System.out.println(name_ingre);
+				String me = resul.getString(3);
+				System.out.println(quan+" "+ me +" "+name_ingre);
+				
 			}
 		}
 	}
