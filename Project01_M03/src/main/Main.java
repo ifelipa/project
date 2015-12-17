@@ -133,7 +133,7 @@ public class Main {
 			
 			stat = Conectar.getInstance().createConnection().createStatement();
 			resul = stat.executeQuery(sql_ingredientes);
-			
+			//fala realizar una tablar donde almacenar receta, ingrediente, `procedimientos
 			while (resul.next()){
 				int quan = resul.getInt("quantity");
 				String name_ingre= resul.getString("name");
