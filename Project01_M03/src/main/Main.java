@@ -175,11 +175,6 @@ public class Main {
 				System.out.print(name_procedure+" "+ time+", ");
 			}
 		}
-
-		
-		
-		
-		
 	}
 
 
