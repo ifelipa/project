@@ -15,6 +15,7 @@ import modelos.Recipe;
 import modelos.RecipeIngredients;
 import dao.*;
 import db.Conectar;
+import db.DbUtil;
 
 public class Main {
 	public static Statement statement = null;
@@ -60,7 +61,8 @@ public class Main {
 		Ingredient oj = new Ingredient(5, "orange juice", "ml", 0.41, 0.095, 0.006, 0.001, 0, al);
 		Ingredient almonds = new Ingredient(6, "almonds", "g", 621, 6.6, 22.9, 52.93, 14, al);
 
-		RecipeIngredients ingredientes = new RecipeIngredients();
+		//RecipeIngredients ingredientes = new RecipeIngredients();
+		
 		ArrayList<RecipeIngredients> llistaIngredients = new ArrayList<RecipeIngredients>();
 		llistaIngredients.add(new RecipeIngredients(1, 1));
 		llistaIngredients.add(new RecipeIngredients(2, 1));
@@ -99,6 +101,9 @@ public class Main {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			DbUtil.close(statement);
+			DbUtil.close(resultSet);
 		}
 
 	}
@@ -111,8 +116,9 @@ public class Main {
 	private static void printRecipe(ResultSet r) throws SQLException {
 		 Statement stat = null;
 		 ResultSet resul = null;
+		 int code_recipe=0; 
 		while (r.next()) {
-			int code = r.getInt("code");
+			code_recipe = r.getInt("code");
 			String name = r.getString("name");
 			String quantity = r.getString("quantity");
 			double kcal = r.getDouble("kcal");
@@ -121,7 +127,7 @@ public class Main {
 			double fat = r.getDouble("fat");
 			double salt = r.getDouble("salt");
 			String allergensList = r.getString("allergensList");
-			System.out.println("Receta nº: " + code);
+			System.out.println("Receta nº: " + code_recipe);
 			System.out.println("Nombre: "+ name);
 			System.out.println("Para "+quantity+" personas.");
 			System.out.println("Los ingredientes son: ");
@@ -129,34 +135,52 @@ public class Main {
 //					+ "	select code_ingredient from ingredientxrecipe where code_recipe ="+code +")";
 			
 			String sql_ingredientes = "select name, quantity,(select Name from measuringmethod where code= measuringCode) from ingredient where code in ("
-					+ "	select code_ingredient from ingredientxrecipe where code_recipe ="+code +")";
+					+ "	select code_ingredient from ingredientxrecipe where code_recipe ="+code_recipe +")";
 			
 			stat = Conectar.getInstance().createConnection().createStatement();
 			resul = stat.executeQuery(sql_ingredientes);
-			//fala realizar una tablar donde almacenar receta, ingrediente, `procedimientos
+			
+			//falta realizar una tabla donde almacenar receta, ingrediente, `procedimientos
 			while (resul.next()){
 				int quan = resul.getInt("quantity");
 				String name_ingre= resul.getString("name");
 				String me = resul.getString(3);
 				System.out.println(quan+" "+ me +" "+name_ingre);
-				
 			}
 		}
-	}
-
-	private void close() {
-		try {
-			if (resultSet != null) {
-				resultSet.close();
+		resul.close();
+		stat.close();
+		
+		stat = Conectar.getInstance().createConnection().createStatement();
+		
+		String sql_pasos = " select  (select name from cookingprocedure where code_cooking = cod_procedure), "
+				+ "(select name  from ingredient where code = cod_ingredient), time from stepxrecipe where cod_recipe="+code_recipe ;
+		resul = stat.executeQuery(sql_pasos);
+		
+		
+		System.out.println("");
+		System.out.println("Preparación: ");
+		
+		
+		while (resul.next()){
+			//int codepro = resul.getInt("cod_procedure");
+			String name_procedure = resul.getString(1);
+			String name_ingredient = resul.getString(2);
+			String time = resul.getString(3);
+			if (name_ingredient != null){
+				System.out.print(name_procedure+" "+ name_ingredient+", ");
+			}else if (time == null){
+				System.out.print(name_procedure+ ", ");
+			} else{
+				System.out.print(name_procedure+" "+ time+", ");
 			}
-			if (statement != null) {
-				statement.close();
-			}
-
-		} catch (Exception e) {
-			System.out.println("error");
-
 		}
+
+		
+		
+		
+		
 	}
+
 
 }
