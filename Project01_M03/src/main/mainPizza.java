@@ -21,15 +21,35 @@ public class mainPizza {
 
 		// createRecipe(2, "Pizza", 1, 1835.94, 108.35, 66.35, 0.0, 486.0, "1,14");
 		
-		 createProcediment(6, "knead until");
-		 createProcediment(7, "let raise");
-		 createProcediment(8, "knead dough again");
-		 createProcediment(9, "lay on oven");
-		 createProcediment(10, "lay on oven");
-		 createProcediment(11, "Bake in oven ");
-		
-		// createStepXRecipe(1,1);
+//		 createProcediment(6, "knead until");
+//		 createProcediment(7, "let raise");
+//		 createProcediment(8, "knead dough again");
+//		 createProcediment(9, "lay on oven");
+//		 createProcediment(10, "lay on oven");
+//		 createProcediment(11, "Bake in oven ");
+//		createProcediment(12, "In bold");
+//		
 
+		
+		// primera linea //
+		createStepXRecipe(12, 0, 0, "0", 0.0, 2);
+		createStepXRecipe(3, 7, 250, "0", 0, 2);
+		createStepXRecipe(3, 8, 200, "0", 0, 2);
+		createStepXRecipe(3, 10, 20, "0", 0, 2);
+		createStepXRecipe(3, 9, 15, "0", 0, 2);
+		// segunda linea //
+		createStepXRecipe(6, 0, 0, "0", 0, 2);
+		// tercera linea //
+		createStepXRecipe(7, 0, 0, "45", 0, 2);
+		// cuarta linea //
+		createStepXRecipe(8, 0, 0, "0", 0, 2);
+		// quinta linea //
+		createStepXRecipe(9, 0, 0, "0", 0, 2);
+		// sexta linea //
+		createStepXRecipe(3, 11, 150, "0", 0, 2);
+		createStepXRecipe(3, 12, 200, "0", 0, 2);
+		// septima linea //
+		createStepXRecipe(11, 0, 0, "20", 220, 2);
 	}
 
 	private static void createStepXRecipe(int cod_procedure, int cod_ingredient, int quantity, String time,
@@ -51,7 +71,11 @@ public class mainPizza {
 			pr.setDouble(5, temperature);
 			pr.setDouble(6, cod_recipe);
 
-			System.out.println(pr.execute());
+			if (pr.execute()) {
+				System.out.println("Hubo un error al ingresar:  "+ cod_procedure);
+			} else {
+				System.out.println("Se agrego correctamente el procedimiento: " + cod_procedure);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
