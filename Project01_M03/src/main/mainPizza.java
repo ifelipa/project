@@ -50,7 +50,48 @@ public class mainPizza {
 		createStepXRecipe(3, 12, 200, "0", 0, 2);
 		// septima linea //
 		createStepXRecipe(11, 0, 0, "20", 220, 2);
+		
+		createAllRecipe(2,"Pizza2", 4);
 	}
+	
+
+	private static void createAllRecipe(int code, String name, int quantity ) {
+		Connection conexion = null;
+		PreparedStatement pr = null;
+		//recuperar datos 
+	}
+	
+	private static void createIngredientxRecipe( int code_recipe, int code_ingredient) {
+
+		Connection conexion = null;
+		PreparedStatement pr = null;
+
+		String sql = "insert into ingredientxrecipe values(?,?)";
+
+		try {
+			conexion = Conectar.getInstance().createConnection();
+			pr = conexion.prepareStatement(sql);
+			pr.setInt(1, code_recipe);
+			pr.setInt(2, code_ingredient);
+			
+
+			if (pr.execute()) {
+				System.out.println("Hubo un error al ingresar:  "+ code_ingredient);
+			} else {
+				System.out.println("Se agrego correctamente el ingrediente: " + code_ingredient);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Estamos jodidos...! createIngredientxRecipe");
+		} finally {
+			DbUtil.close(conexion);
+			DbUtil.close(pr);
+		}
+
+	}
+
+
 
 	private static void createStepXRecipe(int cod_procedure, int cod_ingredient, int quantity, String time,
 			double temperature, int cod_recipe) {
@@ -58,7 +99,6 @@ public class mainPizza {
 		Connection conexion = null;
 		PreparedStatement pr = null;
 
-		// String sql ="insert into recipe values(?,?,?,?,?,?)";
 		String sql = "insert into stepxrecipe values(?,?,?,?,?,?)";
 
 		try {
@@ -75,6 +115,9 @@ public class mainPizza {
 				System.out.println("Hubo un error al ingresar:  "+ cod_procedure);
 			} else {
 				System.out.println("Se agrego correctamente el procedimiento: " + cod_procedure);
+				if (cod_ingredient !=0){
+					createIngredientxRecipe(cod_recipe,cod_ingredient );
+				}
 			}
 
 		} catch (SQLException e) {
