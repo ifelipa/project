@@ -56,9 +56,23 @@ public class mainPizza {
 	
 
 	private static void createAllRecipe(int code, String name, int quantity ) {
+		//variables donde almacenar datos
+		double k=0;
+		
 		Connection conexion = null;
 		PreparedStatement pr = null;
 		//recuperar datos 
+		String sqlTotalkcal="select sum(kcal) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
+		String sqlTotalcarb="select sum(carbohidrates) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
+		String sqlTotalProt="select sum(Proteines) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
+		String sqlTotalFat="select sum(Fat) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
+		String sqlTotalSat="select sum(Salt) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
+		
+		conexion = Conectar.getInstance().createConnection();
+		
+		
+		//cuando tengamos todos los datos se lo pasamos al metodo createRecipe(con todos los datos recuperados)
+		
 	}
 	
 	private static void createIngredientxRecipe( int code_recipe, int code_ingredient) {
