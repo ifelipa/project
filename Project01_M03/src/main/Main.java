@@ -40,19 +40,7 @@ public class Main {
 		// Lista de Ingredientes
 
 		List<Allergen> al = new ArrayList<Allergen>();
-		// Allergen a = new Allergen(01);
-		// al.add(a);
-		// a = new Allergen(07);
-		// al.add(a);
-		// a = new Allergen(14);
-		// al.add(a);
-		//// Ingredient ingr = new Ingredient(01, "Gallo Breadcrumbs", "grams",
-		// 395, 71.98, 13.35, 5.3, 2, al);
-		// ArrayList <String> llistaIngredients=new ArrayList<String>();
-		// llistaIngredients.add("ous");
-		// llistaIngredients.add("oli");
-		// llistaIngredients.add("sal");
-		//
+
 
 		Ingredient banana = new Ingredient(1, "banana", "unit", 110.0, 30.0, 1.0, 0.0, 0.0, al);
 		Ingredient kiwi = new Ingredient(2, "kiwi", "unit", 46.0, 11.14, 0.87, 0.4, 2.0, al);
@@ -114,8 +102,11 @@ public class Main {
 	}
 
 	private static void printRecipe(ResultSet r) throws SQLException {
-		 Statement stat = null;
-		 ResultSet resul = null;
+		 Statement stat1 = null;
+		 ResultSet resul1 = null;
+		 Statement stat2 = null;
+		 ResultSet resul2 = null;
+
 		 int code_recipe=0; 
 		while (r.next()) {
 			code_recipe = r.getInt("code");
@@ -131,50 +122,53 @@ public class Main {
 			System.out.println("Nombre: "+ name);
 			System.out.println("Para "+quantity+" personas.");
 			System.out.println("Los ingredientes son: ");
-//			String sql_ingredientes = "select name, quantity, measuringCode from ingredient where code in ("
-//					+ "	select code_ingredient from ingredientxrecipe where code_recipe ="+code +")";
-			
+
 			String sql_ingredientes = "select name, quantity,(select Name from measuringmethod where code= measuringCode) from ingredient where code in ("
 					+ "	select code_ingredient from ingredientxrecipe where code_recipe ="+code_recipe +")";
 			
-			stat = Conectar.getInstance().createConnection().createStatement();
-			resul = stat.executeQuery(sql_ingredientes);
+			stat1 = Conectar.getInstance().createConnection().createStatement();
+			resul1 = stat1.executeQuery(sql_ingredientes);
 			
-			//falta realizar una tabla donde almacenar receta, ingrediente, `procedimientos
-			while (resul.next()){
-				int quan = resul.getInt("quantity");
-				String name_ingre= resul.getString("name");
-				String me = resul.getString(3);
+			while (resul1.next()){
+				int quan = resul1.getInt("quantity");
+				String name_ingre= resul1.getString("name");
+				String me = resul1.getString(3);
 				System.out.println(quan+" "+ me +" "+name_ingre);
 			}
-		}
-		resul.close();
-		stat.close();
-		
-		stat = Conectar.getInstance().createConnection().createStatement();
-		
-		String sql_pasos = " select  (select name from cookingprocedure where code_cooking = cod_procedure), "
-				+ "(select name  from ingredient where code = cod_ingredient), time from stepxrecipe where cod_recipe="+code_recipe ;
-		resul = stat.executeQuery(sql_pasos);
-		
-		
-		System.out.println("");
-		System.out.println("Preparación: ");
-		
-		
-		while (resul.next()){
-			//int codepro = resul.getInt("cod_procedure");
-			String name_procedure = resul.getString(1);
-			String name_ingredient = resul.getString(2);
-			String time = resul.getString(3);
-			if (name_ingredient != null){
-				System.out.print(name_procedure+" "+ name_ingredient+", ");
-			}else if (time == null){
-				System.out.print(name_procedure+ ", ");
-			} else{
-				System.out.print(name_procedure+" "+ time+", ");
+			
+
+			stat2 = Conectar.getInstance().createConnection().createStatement();
+			
+			String sql_pasos = " select  (select name from cookingprocedure where code_cooking = cod_procedure), "
+					+ "(select name  from ingredient where code = cod_ingredient), time from stepxrecipe where cod_recipe="+code_recipe ;
+			resul2 = stat2.executeQuery(sql_pasos);
+			
+			
+			System.out.println("");
+			System.out.println("Preparación: ");
+			
+			
+			while (resul2.next()){
+				//int codepro = resul.getInt("cod_procedure");
+				String name_procedure = resul2.getString(1);
+				String name_ingredient = resul2.getString(2);
+				String time = resul2.getString(3);
+				if (name_ingredient != null){
+					System.out.print(name_procedure+" "+ name_ingredient+", ");
+				}else if (time == null){
+					System.out.print(name_procedure+ ", ");
+				} else{
+					System.out.print(name_procedure+" "+ time+", ");
+				}
+				
 			}
+			System.out.println("\n");
 		}
+		resul1.close();
+		stat1.close();
+		resul2.close();
+		stat2.close();
+		
 	}
 
 

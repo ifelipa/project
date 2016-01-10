@@ -2,6 +2,7 @@ package main;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -12,14 +13,14 @@ public class mainPizza {
 
 	public static void main(String[] args) {
 		
-//		 insertIngredient(7, "wheat flour", 2, 341.0, 90.6, 9.86, 0.0, 2.0, "250");
-//		 insertIngredient(8, "water", 3, 0, 0, 0, 0, 0, "200");
-//		 insertIngredient(9, "yeast", 2, 164.0, 27.80, 11.8, 0, 360.00,"100");
-//		 insertIngredient(10, "olive oil", 3, 900.0, 1.0, 0.0, 0, 0.0, "20");
-//		 insertIngredient(11, "shredded cheese", 2, 392.84, 25.39, 0.36, 0,675, "150");
-//		 insertIngredient(12, "Tomate sauce", 3, 38.1, 2.30, 5.55, 0, 990, "200");
+//		 insertIngredient(7, "wheat flour", 2, 341.0, 90.6, 9.86, 0.0, 2.0, "250", 1);
+//		 insertIngredient(8, "water", 3, 0, 0, 0, 0, 0, "200",0);
+//		 insertIngredient(9, "yeast", 2, 164.0, 27.80, 11.8, 0, 360.00,"100",0);
+//		 insertIngredient(10, "olive oil", 3, 900.0, 1.0, 0.0, 0, 0.0, "20",0);
+//		 insertIngredient(11, "shredded cheese", 2, 392.84, 25.39, 0.36, 0,675, "150",14);
+//		 insertIngredient(12, "Tomate sauce", 3, 38.1, 2.30, 5.55, 0, 990, "200", 0);
 
-		// createRecipe(2, "Pizza", 1, 1835.94, 108.35, 66.35, 0.0, 486.0, "1,14");
+		
 		
 //		 createProcediment(6, "knead until");
 //		 createProcediment(7, "let raise");
@@ -30,6 +31,7 @@ public class mainPizza {
 //		createProcediment(12, "In bold");
 //		
 
+		/*
 		
 		// primera linea //
 		createStepXRecipe(12, 0, 0, "0", 0.0, 2);
@@ -50,31 +52,121 @@ public class mainPizza {
 		createStepXRecipe(3, 12, 200, "0", 0, 2);
 		// septima linea //
 		createStepXRecipe(11, 0, 0, "20", 220, 2);
+		*/
 		
-		createAllRecipe(2,"Pizza2", 4);
+		//crea la receta
+		
+		//createRecipe(2,"Pizza", 4);
+		
+		//lista los alergicos de la receta
+		//listAllergenOfRecipe(2);
+		
 	}
 	
 
-	private static void createAllRecipe(int code, String name, int quantity ) {
-		//variables donde almacenar datos
-		double k=0;
+	private static void listAllergenOfRecipe(int code) {
+		String sql="select (select name from allergen where code = codeAllergen) from allergenxingredients where codeIngredient in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
+		Statement st = null;
+		ResultSet resul = null;
+		try {
+			st = Conectar.createConnection().createStatement();
+			resul = st.executeQuery(sql);
+			
+			while (resul.next()){
+				
+				System.out.println("* "+resul.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DbUtil.close(st);
+			DbUtil.close(resul);
+		}
 		
-		Connection conexion = null;
-		PreparedStatement pr = null;
-		//recuperar datos 
+		
+	}
+
+
+	private static void createRecipe(int code, String name, int quantity ) {
+		
+		//Sentencias para recuperar datos 
 		String sqlTotalkcal="select sum(kcal) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
 		String sqlTotalcarb="select sum(carbohidrates) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
 		String sqlTotalProt="select sum(Proteines) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
 		String sqlTotalFat="select sum(Fat) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
-		String sqlTotalSat="select sum(Salt) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
+		String sqlTotalSalt="select sum(Salt) from ingredient where code in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
+		String sqltotalAllergen="select codeAllergen from allergenxingredients where codeIngredient in (select code_ingredient from ingredientxrecipe where code_recipe="+code+")";
 		
-		conexion = Conectar.getInstance().createConnection();
+		//recuperar datos
 		
-		
-		//cuando tengamos todos los datos se lo pasamos al metodo createRecipe(con todos los datos recuperados)
-		
+		try {
+			double kcal = dataRecovery(sqlTotalkcal);
+			double carb = dataRecovery(sqlTotalcarb);
+			double prot = dataRecovery(sqlTotalProt);
+			double fat = dataRecovery(sqlTotalFat);
+			double salt = dataRecovery(sqlTotalSalt);
+			String aler = dataRecoveryAllergenList(sqltotalAllergen);
+			createRecipeData(code, name, quantity,  kcal, carb, prot, fat,  salt,  aler);
+		} catch (Exception e) {
+			System.out.println("Hubo un error al crear la receta");
+			e.printStackTrace();
+		}
 	}
 	
+	
+	
+	private static String dataRecoveryAllergenList(String sql) {
+		Statement st = null;
+		ResultSet resul = null;
+		String data = "";
+		 
+		 try {
+			 
+			st = Conectar.getInstance().createConnection().createStatement();
+			resul = st.executeQuery(sql);
+			while (resul.next()){
+				int aux=resul.getInt("codeAllergen");
+				data+= Integer.toString(aux)+",";
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al recuperar datos de la sentencia"+ sql);
+			e.printStackTrace();
+		}finally {
+			DbUtil.close(st);
+			DbUtil.close(resul);
+		}
+		return data;
+	}
+
+
+	private static double dataRecovery(String sql) {
+		Connection conexion = null;
+		Statement st = null;
+		ResultSet resul = null;
+		double data = 0;
+		 
+		 try {
+			 
+			st = Conectar.getInstance().createConnection().createStatement();
+			resul = st.executeQuery(sql);
+			resul.next();
+			data = resul.getDouble(1);
+			
+		} catch (SQLException e) {
+			System.out.println("Error al recuperar datos de la sentencia"+ sql);
+			e.printStackTrace();
+		}finally {
+			DbUtil.close(st);
+			DbUtil.close(resul);
+		}
+		 
+		return data;
+	}
+
+
 	private static void createIngredientxRecipe( int code_recipe, int code_ingredient) {
 
 		Connection conexion = null;
@@ -136,7 +228,7 @@ public class mainPizza {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Estamos jodidos...! createRecipe");
+			System.out.println("Estamos jodidos...! stepxrecipe");
 		} finally {
 			DbUtil.close(conexion);
 			DbUtil.close(pr);
@@ -164,7 +256,7 @@ public class mainPizza {
 		}
 	}
 
-	private static void createRecipe(int code, String name, int quantity, double kcal, double carbohidrates,
+	private static void createRecipeData(int code, String name, int quantity, double kcal, double carbohidrates,
 			double proteines, double fat, double salt, String aler) {
 		
 		Connection conexion = null;
@@ -194,7 +286,7 @@ public class mainPizza {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Estamos jodidos...! createRecipe");
+			System.out.println("Estamos jodidos...! createRecipeData");
 		} finally {
 			DbUtil.close(conexion);
 			DbUtil.close(pr);
@@ -202,7 +294,7 @@ public class mainPizza {
 	}
 
 	private static void insertIngredient(int code, String name, int measuringCode, double kcal, double carbohidrates,
-			double proteines, double fat, double salt, String quantity) {
+			double proteines, double fat, double salt, String quantity, int allergen) {
 		Statement st = null;
 		try {
 			String sql = "insert into ingredient values(" + code + ",'" + name + "'," + measuringCode + "," + kcal + ","
@@ -212,12 +304,30 @@ public class mainPizza {
 			if (st.execute(sql)) {
 				System.out.println("Hubo un error al ingresar: " + name);
 			} else {
+				if (allergen != 0)insertAllergenxIngredient(code, allergen);
 				System.out.println("Se agrego correctament: " + name);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("la jodimos..!  ingredient");
+		} finally {
+			DbUtil.close(st);
+		}
+	}
+	
+	private static void insertAllergenxIngredient(int code, int allergen) {
+		String sqlAllergenxIngredient = "insert into allergenxingredients value ("+code+","+allergen+");";
+		Statement st = null;
+		
+		try {
+			st=Conectar.createConnection().createStatement();
+			if (st.execute(sqlAllergenxIngredient)){
+				System.out.println("Hubo un error al ingresar el alergico con codigo: " + allergen);
+			}
+		} catch (SQLException e) {
+			System.out.println("error al ingresar en la tabala allergenxingredient");
+			e.printStackTrace();
 		} finally {
 			DbUtil.close(st);
 		}
