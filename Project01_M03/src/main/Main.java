@@ -160,6 +160,7 @@ public class Main {
 				} else{
 					System.out.print(name_procedure+" "+ time+", ");
 				}
+				
 			}
 			System.out.println("\n");
 		}
@@ -167,6 +168,7 @@ public class Main {
 		stat1.close();
 		resul2.close();
 		stat2.close();
+		
 	}
 
 

@@ -61,6 +61,13 @@ public class mainPizza {
 		//lista los alergicos de la receta
 		//listAllergenOfRecipe(2);
 		
+		try {
+			printAllRecipe();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 
@@ -71,7 +78,6 @@ public class mainPizza {
 		try {
 			st = Conectar.createConnection().createStatement();
 			resul = st.executeQuery(sql);
-			
 			while (resul.next()){
 				
 				System.out.println("* "+resul.getString(1));
@@ -221,7 +227,7 @@ public class mainPizza {
 				System.out.println("Hubo un error al ingresar:  "+ cod_procedure);
 			} else {
 				System.out.println("Se agrego correctamente el procedimiento: " + cod_procedure);
-				if (cod_ingredient !=0){
+				if (cod_ingredient !=0 ){
 					createIngredientxRecipe(cod_recipe,cod_ingredient );
 				}
 			}
@@ -331,6 +337,94 @@ public class mainPizza {
 		} finally {
 			DbUtil.close(st);
 		}
+	}
+	
+	private static void printAllRecipe() throws SQLException {
+		Statement s = null;
+		 ResultSet r = null; 
+		Statement stat1 = null;
+		 ResultSet resul1 = null;
+		 Statement stat2 = null;
+		 ResultSet resul2 = null;
+
+		 
+		String sql = "select * from recipe";
+		try {
+
+			s = Conectar.getInstance().createConnection().createStatement();
+			r = s.executeQuery(sql);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		 int code_recipe=0; 
+		while (r.next()) {
+			code_recipe = r.getInt("code");
+			String name = r.getString("name");
+			String quantity = r.getString("quantity");
+			double kcal = r.getDouble("kcal");
+			double carbohidrates = r.getDouble("carbohidrates");
+			double proteines = r.getDouble("proteines");
+			double fat = r.getDouble("fat");
+			double salt = r.getDouble("salt");
+			String allergensList = r.getString("allergensList");
+			System.out.println("Receta nº: " + code_recipe);
+			System.out.println("Nombre: "+ name);
+			System.out.println("Para "+quantity+" personas.");
+			System.out.println("Los ingredientes son: ");
+
+			String sql_ingredientes = "select name, quantity,(select Name from measuringmethod where code= measuringCode) from ingredient where code in ("
+					+ "	select code_ingredient from ingredientxrecipe where code_recipe ="+code_recipe +")";
+			
+			stat1 = Conectar.getInstance().createConnection().createStatement();
+			resul1 = stat1.executeQuery(sql_ingredientes);
+			
+			while (resul1.next()){
+				int quan = resul1.getInt("quantity");
+				String name_ingre= resul1.getString("name");
+				String me = resul1.getString(3);
+				System.out.println(quan+" "+ me +" "+name_ingre);
+			}
+			
+
+			stat2 = Conectar.getInstance().createConnection().createStatement();
+			
+			String sql_pasos = " select  (select name from cookingprocedure where code_cooking = cod_procedure), "
+					+ "(select name  from ingredient where code = cod_ingredient), time from stepxrecipe where cod_recipe="+code_recipe ;
+			resul2 = stat2.executeQuery(sql_pasos);
+			
+			
+			System.out.println("\n Esta receta tiene los alergicos: ");
+			listAllergenOfRecipe(code_recipe);
+			System.out.println("\n Preparación: ");
+		
+			
+			while (resul2.next()){
+				//int codepro = resul.getInt("cod_procedure");
+				String name_procedure = resul2.getString(1);
+				String name_ingredient = resul2.getString(2);
+				String time = resul2.getString(3);
+				if (name_ingredient != null){
+					System.out.print(name_procedure+" "+ name_ingredient+", ");
+				}else if (time == null){
+					System.out.print(name_procedure+ ", ");
+				} else{
+					System.out.print(name_procedure+" "+ time+", ");
+				}
+				
+			}
+			System.out.println("\n");
+		}
+		r.close();
+		s.close();
+		resul1.close();
+		stat1.close();
+		resul2.close();
+		stat2.close();
+		
 	}
 
 }
