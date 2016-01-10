@@ -4,16 +4,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 import modelos.Allergen;
-import modelos.AllergenDictionary;
+
 import modelos.Ingredient;
 import modelos.Procedure;
 import modelos.Recipe;
 import modelos.RecipeIngredients;
-import dao.*;
+
 import db.Conectar;
 import db.DbUtil;
 
@@ -160,7 +160,6 @@ public class Main {
 				} else{
 					System.out.print(name_procedure+" "+ time+", ");
 				}
-				
 			}
 			System.out.println("\n");
 		}
@@ -168,7 +167,6 @@ public class Main {
 		stat1.close();
 		resul2.close();
 		stat2.close();
-		
 	}
 
 
