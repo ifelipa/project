@@ -371,7 +371,7 @@ public class mainPizza {
 			double fat = r.getDouble("fat");
 			double salt = r.getDouble("salt");
 			String allergensList = r.getString("allergensList");
-			System.out.println("Receta nº: " + code_recipe);
+			System.out.println("Receta nÂº: " + code_recipe);
 			System.out.println("Nombre: "+ name);
 			System.out.println("Para "+quantity+" personas.");
 			System.out.println("Los ingredientes son: ");
@@ -399,7 +399,7 @@ public class mainPizza {
 			
 			System.out.println("\n Esta receta tiene los alergicos: ");
 			listAllergenOfRecipe(code_recipe);
-			System.out.println("\n Preparación: ");
+			System.out.println("\n PreparaciÃ³n: ");
 		
 			
 			while (resul2.next()){
