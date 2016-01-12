@@ -31,27 +31,28 @@ public class mainPizza {
 //		createProcediment(12, "In bold");
 //		
 
-		/*
-		
+	
+	/*	
 		// primera linea //
-		createStepXRecipe(12, 0, 0, "0", 0.0, 2);
-		createStepXRecipe(3, 7, 250, "0", 0, 2);
-		createStepXRecipe(3, 8, 200, "0", 0, 2);
-		createStepXRecipe(3, 10, 20, "0", 0, 2);
-		createStepXRecipe(3, 9, 15, "0", 0, 2);
+		createStepXRecipe(12, 0, 0, "0", 0.0, 2,1);
+		createStepXRecipe(3, 7, 250, "0", 0, 2,2);
+		createStepXRecipe(3, 8, 200, "0", 0, 2,3);
+		createStepXRecipe(3, 10, 20, "0", 0, 2,4);
+		createStepXRecipe(3, 9, 15, "0", 0, 2,5);
 		// segunda linea //
-		createStepXRecipe(6, 0, 0, "0", 0, 2);
+		createStepXRecipe(6, 0, 0, "0", 0, 2,6);
 		// tercera linea //
-		createStepXRecipe(7, 0, 0, "45", 0, 2);
+		createStepXRecipe(7, 0, 0, "45", 0, 2,7);
 		// cuarta linea //
-		createStepXRecipe(8, 0, 0, "0", 0, 2);
+		createStepXRecipe(8, 0, 0, "0", 0, 2,8);
 		// quinta linea //
-		createStepXRecipe(9, 0, 0, "0", 0, 2);
+		createStepXRecipe(9, 0, 0, "0", 0, 2,9);
 		// sexta linea //
-		createStepXRecipe(3, 11, 150, "0", 0, 2);
-		createStepXRecipe(3, 12, 200, "0", 0, 2);
+		createStepXRecipe(3, 11, 150, "0", 0, 2,10);
+		createStepXRecipe(3, 12, 200, "0", 0, 2,11);
 		// septima linea //
-		createStepXRecipe(11, 0, 0, "20", 220, 2);
+		createStepXRecipe(11, 0, 0, "20", 220, 2,12);
+		
 		*/
 		
 		//crea la receta
@@ -60,6 +61,7 @@ public class mainPizza {
 		
 		//lista los alergicos de la receta
 		//listAllergenOfRecipe(2);
+		
 		
 		try {
 			printAllRecipe();
@@ -205,13 +207,12 @@ public class mainPizza {
 
 
 
-	private static void createStepXRecipe(int cod_procedure, int cod_ingredient, int quantity, String time,
-			double temperature, int cod_recipe) {
+	private static void createStepXRecipe(int cod_procedure, int cod_ingredient, int quantity, String time,double temperature, int cod_recipe, int orden) {
 
 		Connection conexion = null;
 		PreparedStatement pr = null;
 
-		String sql = "insert into stepxrecipe values(?,?,?,?,?,?)";
+		String sql = "insert into stepxrecipe values(?,?,?,?,?,?,?)";
 
 		try {
 			conexion = Conectar.getInstance().createConnection();
@@ -222,6 +223,7 @@ public class mainPizza {
 			pr.setString(4, time);
 			pr.setDouble(5, temperature);
 			pr.setDouble(6, cod_recipe);
+			pr.setInt(7, orden);
 
 			if (pr.execute()) {
 				System.out.println("Hubo un error al ingresar:  "+ cod_procedure);
@@ -392,8 +394,8 @@ public class mainPizza {
 
 			stat2 = Conectar.getInstance().createConnection().createStatement();
 			
-			String sql_pasos = " select  (select name from cookingprocedure where code_cooking = cod_procedure), "
-					+ "(select name  from ingredient where code = cod_ingredient), time from stepxrecipe where cod_recipe="+code_recipe ;
+  			String sql_pasos = " select  (select name from cookingprocedure where code_cooking = cod_procedure), "
+					+ "(select name  from ingredient where code = cod_ingredient), time from stepxrecipe where cod_recipe="+code_recipe +" order by orden ASC" ;
 			resul2 = stat2.executeQuery(sql_pasos);
 			
 			
